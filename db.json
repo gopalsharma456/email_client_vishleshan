@@ -1,0 +1,31 @@
+{
+  "emails": [
+    {
+      "id": 1,
+      "sender": "john@example.com",
+      "recipient": "gopal@example.com",
+      "subject": "Meeting Update",
+      "body": "The meeting is scheduled for tomorrow at 10 AM.",
+      "timestamp": "2025-01-31T10:00:00Z",
+      "read": false
+    },
+    {
+      "id": 2,
+      "sender": "jane@example.com",
+      "recipient": "gopal@example.com",
+      "subject": "Project Proposal",
+      "body": "Please review the attached project proposal document.",
+      "timestamp": "2025-01-30T15:30:00Z",
+      "read": true
+    }
+  ],
+  "drafts": [
+    {
+      "id": 1,
+      "recipient": "alex@example.com",
+      "subject": "Follow-up",
+      "body": "Just following up on our last conversation.",
+      "timestamp": "2025-01-30T18:00:00Z"
+    }
+  ]
+}
