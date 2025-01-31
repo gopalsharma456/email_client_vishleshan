@@ -3,11 +3,15 @@ import { View, TextInput, Alert, StyleSheet } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from "react-native-paper";
+import { sendEmail } from "../services/emailServices";
+
 
 const EditorScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
+  //@ts-ignore
   const draft = route.params?.draft || null;
+  //@ts-ignore
   const loadDrafts = route.params?.loadDrafts || null;
 
 
