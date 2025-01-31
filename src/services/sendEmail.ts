@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const SENDGRID_API_URL = "https://api.sendgrid.com/v3/mail/send";
-const SENDGRID_API_KEY = "YOUR_SENDGRID_API_KEY"; // Replace with actual key
+const SENDGRID_API_URL:string = "https://api.sendgrid.com/v3/mail/send";
+const SENDGRID_API_KEY:string = process.env.SENDGRID_API_KEY
 
-export const sendEmail = async (recipient: string, subject: string, body: string) => {
+ const sendEmail: any = async (recipient: string, subject: string, body: string) => {
   try {
     await axios.post(
       SENDGRID_API_URL,
@@ -24,3 +24,5 @@ export const sendEmail = async (recipient: string, subject: string, body: string
     throw new Error("Failed to send email.");
   }
 };
+
+export default sendEmail;

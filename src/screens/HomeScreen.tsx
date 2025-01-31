@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { View, FlatList, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from "react-native-paper";
@@ -16,20 +22,26 @@ const HomeScreen = () => {
   const [drafts, setDrafts] = useState<Draft[]>([]);
   const navigation = useNavigation();
 
+  const loadDrafts = async () => {
+    const storedDrafts = await AsyncStorage.getItem("drafts");
+    if (storedDrafts) {
+      setDrafts(JSON.parse(storedDrafts));
+    }
+  };
+
   useEffect(() => {
-    const loadDrafts = async () => {
-      const storedDrafts = await AsyncStorage.getItem("drafts");
-      if (storedDrafts) setDrafts(JSON.parse(storedDrafts));
-    };
     loadDrafts();
   }, []);
 
+
   const handleNewDraft = () => {
-    navigation.navigate("Editor", { draft: null });
+    //@ts-ignore
+    navigation.navigate("Editor", { draft: null, loadDrafts });
   };
 
   const handleDraftPress = (draft: Draft) => {
-    navigation.navigate("Editor", { draft });
+    //@ts-ignore
+    navigation.navigate("Editor", { draft, loadDrafts });
   };
 
   return (
@@ -38,7 +50,10 @@ const HomeScreen = () => {
         data={drafts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.draftItem} onPress={() => handleDraftPress(item)}>
+          <TouchableOpacity
+            style={styles.draftItem}
+            onPress={() => handleDraftPress(item)}
+          >
             <Text style={styles.subject}>{item.subject}</Text>
             <Text style={styles.recipient}>To: {item.recipient}</Text>
             <Text style={styles.status}>{item.status}</Text>

@@ -3,13 +3,13 @@ import { View, TextInput, Alert, StyleSheet } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Button } from "react-native-paper";
-import { sendEmail } from "../services/sendEmail"; 
-import { v4 as uuidv4 } from "uuid";
 
 const EditorScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const draft = route.params?.draft || null;
+  const loadDrafts = route.params?.loadDrafts || null;
+
 
   const [recipient, setRecipient] = useState(draft?.recipient || "");
   const [subject, setSubject] = useState(draft?.subject || "");
@@ -17,16 +17,16 @@ const EditorScreen = () => {
   const [isSending, setIsSending] = useState(false);
 
   const saveDraft = async () => {
-    const newDraft = {
-      id: draft?.id || uuidv4(),
+    const storedDrafts = await AsyncStorage.getItem("drafts");
+    let drafts = storedDrafts ? JSON.parse(storedDrafts) : [];
+    console.log("dd", drafts)
+    const newDraft: any = {
+      id: draft?.id || drafts.length,
       recipient,
       subject,
       body,
       status: "Draft",
     };
-
-    const storedDrafts = await AsyncStorage.getItem("drafts");
-    let drafts = storedDrafts ? JSON.parse(storedDrafts) : [];
 
     const existingIndex = drafts.findIndex((d: any) => d.id === newDraft.id);
     if (existingIndex !== -1) {
@@ -37,6 +37,7 @@ const EditorScreen = () => {
 
     await AsyncStorage.setItem("drafts", JSON.stringify(drafts));
     Alert.alert("Saved", "Draft saved successfully!");
+    loadDrafts()
     navigation.goBack();
   };
 
@@ -44,7 +45,7 @@ const EditorScreen = () => {
     setIsSending(true);
     try {
       await sendEmail(recipient, subject, body);
-      
+
       // Mark as sent
       const storedDrafts = await AsyncStorage.getItem("drafts");
       let drafts = storedDrafts ? JSON.parse(storedDrafts) : [];
@@ -86,7 +87,13 @@ const EditorScreen = () => {
       <Button mode="contained" onPress={saveDraft} style={styles.button}>
         Save Draft
       </Button>
-      <Button mode="contained" onPress={handleSendEmail} loading={isSending} disabled={isSending} style={styles.button}>
+      <Button
+        mode="contained"
+        onPress={handleSendEmail}
+        loading={isSending}
+        disabled={isSending}
+        style={styles.button}
+      >
         Send Email
       </Button>
     </View>
@@ -95,8 +102,21 @@ const EditorScreen = () => {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 20, backgroundColor: "#fff" },
-  input: { borderWidth: 1, borderColor: "#ccc", padding: 10, marginBottom: 10, borderRadius: 5 },
-  textArea: { borderWidth: 1, borderColor: "#ccc", padding: 10, height: 150, borderRadius: 5, textAlignVertical: "top" },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+  },
+  textArea: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    height: 150,
+    borderRadius: 5,
+    textAlignVertical: "top",
+  },
   button: { marginTop: 10 },
 });
 
