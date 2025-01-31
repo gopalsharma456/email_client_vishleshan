@@ -6,7 +6,6 @@ A **basic email client** built with **React Native** and **TypeScript**, featuri
 - 📩 View received emails
 - 📝 Compose and send emails
 - 💾 Save drafts locally
-- ✅ Mark emails as read/unread
 - 🗑️ Delete emails
 - 🔄 Pagination support for inbox
 - 📡 API integration with a mock server
@@ -15,7 +14,7 @@ A **basic email client** built with **React Native** and **TypeScript**, featuri
 - **Frontend:** React Native, TypeScript
 - **State Management:** Redux Toolkit / React Context
 - **Navigation:** React Navigation
-- **Storage:** AsyncStorage / SQLite / WatermelonDB
+- **Storage:** AsyncStorage 
 - **Backend (Mock API):** json-server
 
 ---
@@ -40,27 +39,32 @@ json-server --watch db.json --port 5000
 ```
 
 ### 4️⃣ Run the React Native app
-For **iOS:**
 ```sh
-npx pod-install
-npm run ios  # or yarn ios
+Start the Expo development server:
+
+npx expo start
+
+To run the app on an emulator or real device:
+
+Press a to run on Android
+
+Press i to run on iOS (Mac users only)
+
+Scan the QR code using Expo Go app
 ```
-For **Android:**
-```sh
-npm run android  # or yarn android
-```
+
 
 ---
 
 ## 🔗 API Endpoints
-| Method | Endpoint | Description |
-|--------|------------|-------------|
-| GET | `/emails` | Get all emails |
-| GET | `/emails/:id` | Get email by ID |
-| POST | `/emails` | Send a new email |
-| PATCH | `/emails/:id` | Update email (e.g., mark as read) |
-| DELETE | `/emails/:id` | Delete an email |
-| GET | `/drafts` | Get all drafts |
+| Method | Endpoint | Description |  
+|--------|------------|-------------|  
+| GET | `/emails` | Get all emails |  
+| GET | `/emails/:id` | Get email by ID |  
+| POST | `/emails` | Send a new email |  
+| PATCH | `/emails/:id` | Update email (e.g., mark as read) |  
+| DELETE | `/emails/:id` | Delete an email |  
+| GET | `/drafts` | Get all drafts |  
 | POST | `/drafts` | Save a draft |
 
 ---
@@ -90,16 +94,11 @@ npm run android  # or yarn android
 
 ---
 
-## 📝 License
-This project is licensed under the **MIT License**.
-
----
-
 ## 🙌 Contributing
 Feel free to submit pull requests and suggest new features!
 
 ---
 
 ## 📬 Contact
-For any queries, reach out to **Gopal Sharma** via [LinkedIn](https://linkedin.com/in/gopalsharma) or email **gopal@example.com**.
+For any queries, reach out to **Gopal Sharma** via [LinkedIn](https://linkedin.com/in/gopalsharma456) or email **gopalsharmma456@gmail.com**.
 
